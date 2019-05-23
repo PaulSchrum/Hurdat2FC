@@ -56,6 +56,9 @@ if not history:
 if arcpy.Exists(outfile):
     arcpy.Delete_management(outfile)
 
+print("Input: {}".format(infile))
+print("Output: {}".format(outfile))
+
 out_path, out_file_name = os.path.split(outfile)
 av = [anSr for anSr in arcpy.ListSpatialReferences("*WGS*", "GCS")]
 sr = arcpy.SpatialReference('Geographic Coordinate Systems/World/WGS 1984')
@@ -100,6 +103,7 @@ try:
     with arcpy.da.InsertCursor(outfile, field_list) as cursor:
         a_storm: HurricaneTrack
         for a_storm in history.all_storms.values():
+            print("Processing storm " + a_storm.unique_name)
             data_list = [None] * len(field_list)
             data_list[field_dict[designation]] = a_storm.designation
             data_list[field_dict[name]] = a_storm.name
@@ -117,8 +121,9 @@ try:
 
 finally:
     del cursor
+    print("Input: {}".format(infile))
+    print("Output: {}".format(outfile))
 
-dbg = True
 
 
 
