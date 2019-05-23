@@ -33,12 +33,24 @@ class HurricaneTrack():
                 + ' ' + str(self.start_time.day) + ' ' + self.name
 
     @property
+    def unique_name(self):
+        return self.__repr__()
+
+    @property
     def start_time(self):
         return list(self.record_dict.keys())[0]
 
     @property
     def end_time(self):
         return list(self.record_dict.keys())[-1]
+
+    @property
+    def shape(self):
+        '''
+        List of coordinate pairs (tuples)
+        :return: List of coordinate pairs (tuples)
+        '''
+        return [r.coords for r in self.record_dict.values()]
 
 if __name__ == '__main__':
     testRecords = \
