@@ -72,6 +72,10 @@ class HurricaneRecord:
         self.sw64_radius = float(field_list[col_idx['sw64']])
         self.nw64_radius = float(field_list[col_idx['nw64']])
 
+    @property
+    def coords(self):
+        return (self.longitude, self.latitude)
+
 
 if __name__ == '__main__':
     a_rec_str = '20160902, 0530, L, HU, 30.1N,  84.1W,  70,  981,  130,  15'\

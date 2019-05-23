@@ -9,7 +9,6 @@ contains all hurricane tracks in the database being read.
 
 __author__ = 'Paul Schrum'
 
-import datetime
 from HurricaneTrack import HurricaneTrack
 
 class HurricaneHistory:
