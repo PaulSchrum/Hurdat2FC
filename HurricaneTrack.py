@@ -28,6 +28,12 @@ class HurricaneTrack():
         self.min_bar_pressure = min([r.min_pressure for r in
                                    self.record_dict.values()])
 
+        self.start_time = min(self.record_dict)
+        a_record: HurricaneRecord
+        for a_record in self.record_dict.values():
+            a_record.set_track_start_time(self.start_time)
+
+
     def __repr__(self):
         return str(self.start_time.year) + ' ' + str(self.start_time.month) \
                 + ' ' + str(self.start_time.day) + ' ' + self.name
@@ -35,10 +41,6 @@ class HurricaneTrack():
     @property
     def unique_name(self):
         return self.__repr__()
-
-    @property
-    def start_time(self):
-        return list(self.record_dict.keys())[0]
 
     @property
     def end_time(self):

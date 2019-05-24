@@ -35,14 +35,14 @@ infile = sys.argv[1]
 outfile = sys.argv[2]
 
 if not os.path.exists(infile):
-    if infile == 'Testing':
+    if infile.upper() == 'Testing'.upper():
         infile = os.path.join(os.getcwd(), r"Test Data\hurdat2-2016-2018.txt")
     else:
         print("Can not find input file: {}".format(infile))
         print("No work performed. Exiting.")
         sys.exit(0)
 
-if outfile == 'Testing':
+if outfile.upper() == 'Testing'.upper():
     outfile = r'D:\Research\Datasets\Weather\Hurricanes\shapefiles' \
               r'\hurricanes.shp'
 
@@ -63,7 +63,8 @@ out_path, out_file_name = os.path.split(outfile)
 av = [anSr for anSr in arcpy.ListSpatialReferences("*WGS*", "GCS")]
 sr = arcpy.SpatialReference('Geographic Coordinate Systems/World/WGS 1984')
 arcpy.CreateFeatureclass_management(out_path, out_file_name, "POLYLINE",
-                                    None, "DISABLED", "DISABLED", sr)
+                                    None, has_m="ENABLED",
+                                    has_z="ENABLED", spatial_reference=sr)
 
 designation = 'Designatio'
 name = 'Name'
@@ -112,7 +113,8 @@ try:
             data_list[field_dict[end_time]] = a_storm.end_time
             data_list[field_dict[max_wind]] = a_storm.max_wind_speed
             data_list[field_dict[min_pressure]] = a_storm.min_bar_pressure
-            line_points = [arcpy.Point(p[0], p[1]) for p in a_storm.shape]
+            line_points = [arcpy.Point(p[0], p[1], p[2], p[3]) for p in
+                           a_storm.shape]
             line_points = arcpy.Array(line_points)
             data_list[field_dict[shape]] = arcpy.Polyline(line_points)
             cursor.insertRow(data_list)
@@ -123,9 +125,4 @@ finally:
     del cursor
     print("Input: {}".format(infile))
     print("Output: {}".format(outfile))
-
-
-
-
-
 

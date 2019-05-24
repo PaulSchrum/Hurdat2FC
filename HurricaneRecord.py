@@ -72,9 +72,15 @@ class HurricaneRecord:
         self.sw64_radius = float(field_list[col_idx['sw64']])
         self.nw64_radius = float(field_list[col_idx['nw64']])
 
+    def set_track_start_time(self, track_start: datetime.datetime):
+        self._track_start = track_start
+        delta: datetime.timedelta = (self.record_time - self._track_start)
+        self.minutes = delta.days * 24.0 * 60.0 + delta.seconds / 60.0
+
     @property
     def coords(self):
-        return (self.longitude, self.latitude)
+        return (self.longitude, self.latitude, self.max_sustained_wind,
+                self.minutes)
 
 
 if __name__ == '__main__':
