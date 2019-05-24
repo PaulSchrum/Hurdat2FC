@@ -28,8 +28,6 @@ class HurricaneHistory:
                 repr = one_track.__repr__()
                 self.all_storms[repr] = one_track
 
-                dbg = True
-
 if __name__ == '__main__':
     test_db_file = "Test Data/hurdat2-2016-2018.txt"
     real_db_file = r"D:\Research\Datasets\Weather\Hurricanes\hurdat" \

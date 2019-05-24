@@ -119,8 +119,6 @@ try:
             data_list[field_dict[shape]] = arcpy.Polyline(line_points)
             cursor.insertRow(data_list)
 
-            dbg = True
-
 finally:
     del cursor
     print("Input: {}".format(infile))
