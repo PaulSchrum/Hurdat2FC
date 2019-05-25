@@ -62,6 +62,7 @@ class HurricaneRecord:
         self.ne34_radius = float(field_list[col_idx['ne34']])
         self.se34_radius = float(field_list[col_idx['se34']])
         self.sw34_radius = float(field_list[col_idx['sw34']])
+        self.nw34_radius = float(field_list[col_idx['nw34']])
         self.nw50_radius = float(field_list[col_idx['nw50']])
         self.ne50_radius = float(field_list[col_idx['ne50']])
         self.se50_radius = float(field_list[col_idx['se50']])
