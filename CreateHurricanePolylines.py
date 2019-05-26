@@ -7,7 +7,11 @@ This module reads a hurricane track database (HURDAT2 from www.nhc.noaa.gov)
 and creates a new shapefile from it. If the shapefile already exists,
 this module overwrites it. (It destroys the file if it fails during write.)
 
-The Coordinate System is WGS83 and can not be customized.
+Contrary to the name, this module also creates a point shapefile from the
+dataset.
+
+The shapefiles are created in the Coordinate System is WGS83 and can not be
+customized.
 
 Usage:
 python CreateHurricanePolylines.py <input file name> <output shapefile name>
