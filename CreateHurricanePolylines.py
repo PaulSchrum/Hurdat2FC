@@ -146,6 +146,7 @@ if create_point_shapefile:
 
     designation = 'Designation'[:10]
     timestamp = 'TimeStamp'
+    timestring = 'TimeString'
     identifier = 'Identifier'
     system_status = 'SystemStatus'[:10]
     max_sustained_winds = 'MaxSustWinds'[:10]
@@ -165,8 +166,8 @@ if create_point_shapefile:
     nw64_radius = 'NW64RADIUS'
     shapexy = 'SHAPE@XY'
 
-    field_list = [designation, timestamp, identifier, system_status,
-            max_sustained_winds, min_pressure, age_minutes,
+    field_list = [designation, timestamp, timestring, identifier,
+            system_status, max_sustained_winds, min_pressure, age_minutes,
             ne34_radius, se34_radius, sw34_radius, nw34_radius,
             ne50_radius, se50_radius, sw50_radius, nw50_radius,
             ne64_radius, se64_radius, sw64_radius, nw64_radius,
@@ -182,6 +183,8 @@ if create_point_shapefile:
     arcpy.AddField_management(outfile_points, field_name=timestamp,
                               field_type='DATE',
                               field_is_nullable='NON_NULLABLE')
+    arcpy.AddField_management(outfile_points, field_name=timestring,
+                              field_type='TEXT', field_length=15)
     arcpy.AddField_management(outfile_points, field_name=identifier,
                               field_type='TEXT', field_length=3)
     arcpy.AddField_management(outfile_points, field_name=system_status,
@@ -224,12 +227,14 @@ if create_point_shapefile:
         with arcpy.da.InsertCursor(outfile_points, field_list) as cursor:
             a_storm: HurricaneTrack
             for a_storm in history.all_storms.values():
-                print("   Processing points for storm " + a_storm.unique_name)
+                # print("   Processing points for storm " + a_storm.unique_name)
                 a_rec: HurricaneRecord
                 for a_rec in a_storm.record_dict.values():
                     data_list = [None] * len(field_list)
                     data_list[field_dict[designation]] = a_storm.designation
                     data_list[field_dict[timestamp]] = a_rec.record_time
+                    data_list[field_dict[timestring]] = \
+                        a_rec.record_time.strftime('%Y%m%d, %H%M')
                     data_list[field_dict[identifier]] = a_rec.identifier
                     data_list[field_dict[system_status]] = \
                         a_rec.system_status
